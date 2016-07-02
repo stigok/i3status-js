@@ -3,7 +3,7 @@
 const exec = require('./exec-promise');
 
 // Update interval (ms)
-const updateInterval = 3000;
+const updateInterval = process.argv[2] || 3000;
 
 const commands = [
   // Networking
