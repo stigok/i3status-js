@@ -4,6 +4,7 @@ const exec = require('./exec-promise');
 
 // Update interval (ms)
 const updateInterval = process.argv[2] || 3000;
+const separator = ' | ';
 
 const commands = require('./commands.js');
 
@@ -20,7 +21,13 @@ const commands = require('./commands.js');
   Promise.all(promises).then(results => {
     // Clear the console
     process.stdout.write('\x1B[2J\x1B[0f');
-    console.log(results.join(' | '));
+
+    const output = results
+      .map(r => Array.isArray(r) ? r.join(separator) : r)
+      .join(separator);
+
+    // Join and write command outputs
+    console.log(output);
 
     // Start the worker again after a while
     setTimeout(worker, updateInterval);
