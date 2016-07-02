@@ -1,6 +1,6 @@
 # statusbar-js
 
-> Made this for my i3wm i3-status bar
+> Text based system status bar
 
 ## Usage
 
