@@ -10,9 +10,18 @@
 4. Customize commands to your likings
 5. Run with `node index.js [ updateInterval ]` where `updateInterval` is time in milliseconds
 
+## Usage with i3 window manager
+
+Find the line where `bar` is set in `~/.config/i3/config` and update `status_command` to run this script instead
+
+    bar {
+      # Update interval 3000ms
+      status_command node ~/i3status-js/index.js 3000
+    }
+
 ## Example output
 
-    IP: 192.168.77.5 | VPN: Netherlands | Time: 2016-07-02 23:08:23
+    IP: 192.168.77.7 | VPN: Japan | WiFi: ossss | Brightness: 10 | Battery: 76% | Time: 2016-07-03 00:04:20
 
 ## Commands
 
@@ -66,14 +75,6 @@ Get VPN status and WiFi information from the same output
     }
 
 All functions in `command.actions` are called with a single param `stdout`.
-
-## Using with i3
-Find the line where `bar` is set in `~/.config/i3/config` and update `status_command` to run this script instead
-
-    bar {
-      # Update interval 3000ms
-      status_command node ~/i3status-js/index.js 3000
-    }
 
 ## License
 

@@ -21,6 +21,14 @@ module.exports = [
           return 'VPN: no';
         }
         return 'VPN: ' + matches[0];
+      },
+      data => {
+        let matches = [];
+        data.replace(/(^\w+)(?:.+wifi)/m, (str, match) => matches.push(match));
+        if (!matches.length) {
+          return 'WiFi: no';
+        }
+        return 'WiFi: ' + matches[0];
       }
     ]
   },
