@@ -2,15 +2,24 @@
 
 > Text based system status bar
 
+## Install
+
+    git clone https://github.com/stigok/statusbar-js
+    cd statusbar-js
+    npm install
+    mv commands.sample.js commands.js
+
 ## Usage
 
-1. Clone repo
-2. Install dependencies `npm i`
-3. Rename `commands-template.js` to `commands.js`
-4. Customize commands to your likings
-5. Run with `node index.js [ updateInterval ]` where `updateInterval` is time in milliseconds
+    // updateInterval in milliseconds
+    node index.js [updateInterval]
 
-## Usage with i3 window manager
+### Example
+
+    $: node index.js 3000
+    IP: 192.168.77.7 | VPN: Japan | WiFi: ossss | Brightness: 10 | Battery: 76% | Time: 2016-07-03 00:04:20
+
+### Using with i3 window manager
 
 Find the line where `bar` is set in `~/.config/i3/config` and update `status_command` to run this script instead
 
