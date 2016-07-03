@@ -1,6 +1,32 @@
 const util = require('util');
 
 module.exports = [
+  {
+    cmd: 'ps -eo pcpu --sort=-pcpu',
+    actions: [
+      data => {
+        let stats = [];
+        data.replace(/([\d\.]{3,})/gm, (str, match) => stats.push(Number(match)));
+        // Reduce to single decimal
+        let total = stats.reduce((a, b) => a + b);
+        total = (total * 10 | 0) / 10;
+        return util.format('%d% (%s%)', total, stats[0]);
+      }
+    ]
+  },
+  {
+    cmd: 'ps -eo size --sort=-size',
+    actions: [
+      data => {
+        let stats = [];
+        data.replace(/([\d\.]{3,})/gm, (str, match) => stats.push(Number(match) / 1000 | 0));
+        // Reduce to single decimal
+        let total = stats.reduce((a, b) => a + b);
+        // Reduce to single decimal
+        return util.format('%d MiB (%d MiB)  |', total, stats[0]);
+      }
+    ]
+  },
   // Networking
   {
     cmd: 'ip address',
@@ -35,32 +61,6 @@ module.exports = [
     ]
   },
   {
-    cmd: 'ps -eo pcpu --sort=-pcpu',
-    actions: [
-      data => {
-        let stats = [];
-        data.replace(/([\d\.]{3,})/gm, (str, match) => stats.push(Number(match)));
-        // Reduce to single decimal
-        let total = stats.reduce((a, b) => a + b);
-        total = (total * 10 | 0) / 10;
-        return util.format('%d% (%s%)', total, stats[0]);
-      }
-    ]
-  },
-  {
-    cmd: 'ps -eo size --sort=-size',
-    actions: [
-      data => {
-        let stats = [];
-        data.replace(/([\d\.]{3,})/gm, (str, match) => stats.push(Number(match) / 1000 | 0));
-        // Reduce to single decimal
-        let total = stats.reduce((a, b) => a + b);
-        // Reduce to single decimal
-        return util.format('%d MiB (%d MiB)  |', total, stats[0]);
-      }
-    ]
-  },
-  {
     cmd: 'cat /sys/devices/virtual/thermal/thermal_zone0/temp &&' +
          'cat /sys/devices/virtual/thermal/thermal_zone1/temp &&' +
          'cat /sys/devices/virtual/thermal/thermal_zone2/temp',
@@ -78,7 +78,8 @@ module.exports = [
     actions: [
       data => {
         let volume = data.match(/\[(\d{1,3}%)]/)[1];
-        return util.format('♬ %s', volume);
+        let muted = data.match(/(\[off\])/);
+        return util.format('♬ %s', muted ? '(Muted)' : volume);
       }
     ]
   },
