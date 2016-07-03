@@ -1,0 +1,1 @@
+- NetworkManager spikes on queries. Find better solution?
