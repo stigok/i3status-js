@@ -4,12 +4,15 @@ const exec = require('./exec-promise');
 
 // Update interval (ms)
 const updateInterval = process.argv[2] || 3000;
-const separator = ' | ';
+const separator = '  ';
 
 const commands = require('./commands.js');
+const luckyCharm = '⚥';
 
 // Run the status update worker
 (function worker() {
+  const timeStarted = Date.now();
+
   // Map all commands into exec promises
   const promises = commands.map(item => {
     return exec(item.cmd).then(stdout => {
@@ -26,8 +29,9 @@ const commands = require('./commands.js');
       .map(r => Array.isArray(r) ? r.join(separator) : r)
       .join(separator);
 
-    // Join and write command outputs
-    console.log(output);
+    // Print status
+    const executionTime = Date.now() - timeStarted;
+    console.log('%s oneoneone | %s // %sms', luckyCharm, output, executionTime);
 
     // Start the worker again after a while
     setTimeout(worker, updateInterval);
