@@ -40,11 +40,11 @@ module.exports = [
     ]
   },
   {
-    cmd: 'nmcli connection show --active',
+    cmd: 'nmcli -t -f DEVICE,TYPE,NAME c show --active',
     actions: [
       data => {
         let matches = [];
-        data.replace(/(^\w+)(?:.+wifi)/m, (str, match) => matches.push(match));
+        data.replace(/wireless:(\S+)/, (str, match) => matches.push(match));
         if (!matches.length) {
           return 'WiFi: no';
         }
@@ -52,11 +52,11 @@ module.exports = [
       },
       data => {
         let matches = [];
-        data.replace(/(^\w+)(?:.+vpn)/m, (str, match) => matches.push(match));
+        data.replace(/vpn:(.+)/m, (str, match) => matches.push(match));
         if (!matches.length) {
           return 'VPN: no';
         }
-        return 'VPN: ' + matches[0] + '  |';
+        return 'VPN: ' + matches[0];
       }
     ]
   },
