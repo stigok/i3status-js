@@ -94,7 +94,11 @@ module.exports = [
   {
     cmd: 'acpi --battery',
     actions: [
-      data => '♥ ' + data.match(/(\d{1,3}%)/)[1]
+      function (data) {
+        var chargeStatus = data.match(/discharging/ig) === null ? '↯' : '🔋';
+        var chargeLevel = data.match(/(\d{1,3}%)/)[1];
+        return '♥ ' + chargeLevel + ' ' + chargeStatus;
+      }
     ]
   },
   // Time
