@@ -44,7 +44,8 @@ const commands = require('./commands.js');
     if (debugging) {
       // Print execution profile
       const debugstr = timers.map(t => util.format('cmd: %s @ %d ms', t.name.substring(0, 20), t.ended - t.started));
-      console.log('DEBUG: ' + debugstr);
+      console.error('DEBUG: Command timings:');
+      debugstr.forEach(str => console.error('DEBUG: ' + str));
     }
 
     // Start the worker again after a while
