@@ -14,6 +14,8 @@
     // updateInterval in milliseconds
     node index.js [updateInterval] [--debug]
 
+Debug messages written to `stderr`
+
 ### Example
 
     $: node index.js 3000
@@ -24,12 +26,12 @@ Find the line where `bar` is set in `~/.config/i3/config` and update `status_com
 
     bar {
       # Update interval 3000ms
-      status_command node ~/i3status-js/index.js 3000
+      status_command node ~/repos/statusbar-js/index.js 3000 --debug 2>> ~/i3status.log
     }
 
 ## Example output
 
-    IP: 192.168.77.7 | VPN: Japan | WiFi: ossss | Brightness: 10 | Battery: 76% | Time: 2016-07-03 00:04:20
+    IP: 10.10.13.37 | VPN: Japan | WiFi: ossss | Brightness: 7 | Battery: 76% | Time: 2016-07-03 00:04:20
 
 ## Commands
 
