@@ -49,5 +49,8 @@ const commands = require('./commands.js');
 
     // Start the worker again after a while
     setTimeout(worker, updateInterval);
+  })
+  .catch(err => {
+    console.error('Hit an error', err);
   });
 })();
