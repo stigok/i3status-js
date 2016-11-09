@@ -12,7 +12,7 @@
 ## Usage
 
     // updateInterval in milliseconds
-    node index.js [updateInterval]
+    node index.js [updateInterval] [--debug]
 
 ### Example
 
