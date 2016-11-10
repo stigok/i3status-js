@@ -1,6 +1,6 @@
 'use strict';
 
-const exec = require('./exec-promise');
+const execa = require('execa');
 const util = require('util');
 
 // Update interval (ms)
@@ -23,10 +23,14 @@ const commands = require('./commands.js');
     };
     timers.push(timer);
 
-    return exec(item.cmd).then(stdout => {
-      timer.ended = Date.now();
-      return item.actions.map(fn => fn(stdout));
-    });
+    return execa.shell(item.cmd)
+      .then(result => {
+        timer.ended = Date.now();
+        return item.actions.map(fn => fn(result.stdout));
+      }, err => {
+        timer.ended = Date.now();
+        return 'erred';
+      });
   });
 
   // Wait for all commands to finish then print results
