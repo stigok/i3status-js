@@ -47,7 +47,7 @@ const clearScreen = '\n\x1B[2J\x1B[0f';
       .join(separator);
 
     // Join and write command outputs
-    console.log(output);
+    console.log(`${output} /// ${timers.reduce((sum, t) => sum + t.ended - t.started, 0)}ms`);
 
     if (debugging) {
       // Print execution profile
