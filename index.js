@@ -12,8 +12,7 @@ const execa = require('execa');
 const updateInterval = process.argv[2] || 3000;
 const debugging = process.argv.indexOf('--debug') >= 0;
 const separator = ' | ';
-
-const commands = require('./commands.js');
+const clearScreen = '\n\x1B[2J\x1B[0f';
 
 // Run the status update worker
 (function worker() {
@@ -41,7 +40,7 @@ const commands = require('./commands.js');
   // Wait for all commands to finish then print results
   Promise.all(promises).then(results => {
     // Clear the console
-    process.stdout.write('\x1B[2J\x1B[0f');
+    process.stdout.write(clearScreen);
 
     const output = results
       .map(r => Array.isArray(r) ? r.join(separator) : r)
