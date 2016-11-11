@@ -1,7 +1,12 @@
 'use strict';
 
-const execa = require('execa');
 const util = require('util');
+const commands = require('./commands.js');
+// Raise max event listeners to amount of commands
+if (commands.length > 10) {
+  require('events').EventEmitter.prototype._maxListeners = 100;
+}
+const execa = require('execa');
 
 // Update interval (ms)
 const updateInterval = process.argv[2] || 3000;
