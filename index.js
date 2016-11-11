@@ -13,6 +13,7 @@ const updateInterval = process.argv[2] || 3000;
 const debugging = process.argv.indexOf('--debug') >= 0;
 const separator = ' | ';
 const clearScreen = '\n\x1B[2J\x1B[0f';
+const options = {reject: false};
 
 // Run the status update worker
 (function worker() {
@@ -27,13 +28,12 @@ const clearScreen = '\n\x1B[2J\x1B[0f';
     };
     timers.push(timer);
 
-    return execa.shell(item.cmd)
+    return execa.shell(item.cmd, options)
       .then(result => {
         timer.ended = Date.now();
-        return item.actions.map(fn => fn(result.stdout));
-      }, err => {
-        timer.ended = Date.now();
-        return 'erred';
+        if (debugging && result.failed) console.error(result);
+        const data = result.failed ? null : result.stdout;
+        return item.actions.map(fn => fn(data));
       });
   });
 
