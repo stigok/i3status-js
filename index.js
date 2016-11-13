@@ -47,7 +47,11 @@ const options = {reject: false};
       .join(separator);
 
     // Join and write command outputs
-    console.log(`${output} /// ${timers.reduce((sum, t) => sum + t.ended - t.started, 0)}ms`);
+    const times = timers.map(t => t.ended - t.started);
+    const sum = times.reduce((sum, t) => sum + t, 0)
+    const avg = sum / times.length | 0;
+    const max = times.reduce((a, b) => a > b ? a : b)
+    console.log(`${output} /// ø ${avg}ms / max ${max}ms)`);
 
     if (debugging) {
       // Print execution profile
