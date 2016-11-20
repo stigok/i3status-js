@@ -1,7 +1,7 @@
 'use strict';
 
 const util = require('util');
-const commands = require('./commands.js');
+const commands = require('./commands-powered.js');
 // Raise max event listeners to amount of commands
 if (commands.length > 10) {
   require('events').EventEmitter.prototype._maxListeners = 100;
