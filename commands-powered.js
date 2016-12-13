@@ -7,7 +7,13 @@ module.exports = [
   {
     cmd: '# Lucky charms',
     actions: [
-      () => "⚥⚥⚥ xxx"
+      () => "<3 ⚥⚥⚥"
+    ]
+  },
+  {
+    cmd: `grep --count '' ~/docs/TODO`,
+    actions: [
+      data => `TODOs ${data}`
     ]
   },
   {
@@ -24,7 +30,7 @@ module.exports = [
   },
   // Networking
   {
-    cmd: 'curl -sS https://whatismyip.stigok.com | grep -oe \'[a-f0-9\.]\\{7,15\\}$\'',
+    cmd: '#curl -sS https://whatismyip.stigok.com | grep -oe \'[a-f0-9\.]\\{7,15\\}$\'',
     actions: [
       ip => `WAN: ${ip || 'N/A'}`
     ]
@@ -40,13 +46,13 @@ module.exports = [
     ]
   },
   {
-    cmd: `nmcli --terse --fields NAME,TYPE c show --active | grep ':802-11-wireless' | xcol 1`,
+    cmd: `#nmcli --terse --fields NAME,TYPE c show --active | grep ':802-11-wireless' | xcol 1`,
     actions: [
-      data => `WiFi: ${data ? data.split(':')[0] : "no"}`,
+      data => `WiFi: ${data ? data.split(':')[0] : "no"}`
     ]
   },
   {
-    cmd: `nmcli --terse --fields NAME,TYPE c show --active | grep ':vpn' | xcol 1`,
+    cmd: `#nmcli --terse --fields NAME,TYPE c show --active | grep ':vpn' | xcol 1`,
     actions: [
       data => `VPN: ${data ? data.split(':')[0] : "no"}`,
     ]
