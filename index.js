@@ -1,7 +1,7 @@
 'use strict';
 
 const util = require('util');
-const commands = require('./commands-powered.js');
+const commands = require('./commands.js');
 // Raise max event listeners to amount of commands
 if (commands.length > 10) {
   require('events').EventEmitter.prototype._maxListeners = 100;
@@ -12,7 +12,8 @@ const execa = require('execa');
 const updateInterval = process.argv[2] || 3000;
 const debugging = process.argv.indexOf('--debug') >= 0;
 const separator = ' | ';
-const clearScreen = '\n\x1B[2J\x1B[0f';
+//const clearScreen = '\n\x1B[2J\x1B[0f';
+const clearScreen = '\n***CLEAR***\n';
 const options = {reject: false};
 
 // Run the status update worker
