@@ -1,1 +1,2 @@
 Call all command files as functions with a logger as parameter to allow error logging with state
+Command file names should only have a single dot, including the file extenstion .js
