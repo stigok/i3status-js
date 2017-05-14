@@ -1,30 +1,17 @@
 {
-  "name": "i3status-js",
-  "version": "0.0.0",
+  "name": "statusbar-js",
+  "version": "0.0.1",
   "description": "Text based system status bar",
   "main": "index.js",
-  "dependencies": {
-    "bluebird": "^3.4.1",
-    "event-stream": "^3.3.4",
-    "execa": "^0.5.0"
-  },
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stigok/statusbar-js.git"
-  },
   "keywords": [
-    "status",
     "statusbar",
-    "sysmon",
-    "monitor"
+    "monitor",
+    "i3-status"
   ],
-  "author": "sshow",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/stigok/statusbar-js/issues"
-  },
-  "homepage": "https://github.com/stigok/statusbar-js#readme"
+  "author": "stigok",
+  "license": "CC-0",
 }
