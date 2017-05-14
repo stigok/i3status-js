@@ -7,3 +7,6 @@ module.exports.extract = (pattern, str) => {
   })
   return matches
 }
+
+module.exports.mapObject = (obj) => Object.keys(obj).map(key => obj[key])
+

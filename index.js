@@ -3,44 +3,39 @@
 const fs = require('fs')
 const path = require('path')
 const cwd = path.dirname(process.argv[1])
+const mapObject = require('./utils').mapObject
 
 const pluginDir = process.argv.PLUGIN_DIR || path.join(cwd, 'commands.d/')
 const separator = ' | '
+const clearScreen = '\x1B[2J\x1B[0f'
 
-function loadFiles (cb) {
-  const dict = {}
-  fs.readdir(pluginDir, (err, files) => {
-    if (err) throw err
-    files.filter(name => path.extname(name) === '.js')
-      .forEach(filename => {
-        dict[filename.split('.')[0]] = require(path.join(pluginDir, filename))
-      })
-    cb(null, dict)
-  })
-}
+const dict = {}
+const contexts = []
 
-loadFiles((err, dict) => {
+fs.readdir(pluginDir, (err, files) => {
   if (err) throw err
-  else console.log('Fetched ' + Object.keys(dict).length + ' file(s) successfully', dict)
-
-  for (key in dict) {
-    const cmd = dict[key]
-    // Get initial value
-    cmd.currentValue = cmd.fn()
-    // Individual command loop
-    cmd.interval = setInterval(() => {
-      cmd.currentValue = cmd.fn()
-    }, cmd.wait)
-  }
-
-  // Main update loop
-  setInterval(() => {
-    statusbar = mapObj(dict).map(cmd => cmd.currentValue).join(separator)
-    console.log(statusbar)
-  }, 1000)
+  files.filter(name => path.extname(name) === '.js')
+    .map(name => require(path.join(pluginDir, name)))
+    .reverse()
+    .forEach(fn => {
+      const ctx = {refresh: update}
+      fn(ctx)
+      contexts.push(ctx)
+    })
 })
 
-function mapObj (obj) {
-  return Object.keys(obj).map(key => obj[key])
+let statusbar
+function write (str) {
+  if (str !== statusbar) {
+    statusbar = str
+    process.stdout.write(clearScreen + '\n')
+    process.stdout.write(statusbar)
+  }
 }
+
+function update () {
+  write(contexts.map(ctx => ctx.value).join(separator))
+}
+
+setInterval(() => update(), 1000)
 
