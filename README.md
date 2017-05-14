@@ -5,9 +5,11 @@ Loads files from `commands.d/` in alphabetical order and prints their output in 
 ## command files
 
 ```
-module.exports = {
-  fn: () => 'this function will be called each `wait` milliseconds',
-  wait: 1337
+// Updates timestamp every second
+module.exports = (ctx) => {
+  setInterval(() => {
+    ctx.value = 'Epoch: ' + Date.now()
+  }, 1000)
 }
 ```
 
