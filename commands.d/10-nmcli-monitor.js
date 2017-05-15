@@ -15,6 +15,6 @@ module.exports = (ctx) => {
     console.error('data', data)
   })
 
-  ctx.value = 'nmcli d mon'
+  ctx.value = 'nmcli mon'
 }
 
