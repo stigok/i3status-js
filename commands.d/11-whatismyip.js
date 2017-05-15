@@ -4,7 +4,7 @@ const interval = 60 * 1000
 const endpoint = 'https://ip.42.fm/'
 
 function update(ctx) {
-  execFile('curl', ['-s'], (err, stdout, stderr) => {
+  execFile('curl', ['-s', endpoint], (err, stdout, stderr) => {
     if (err) {
       ctx.value = '(wan ip failed)'
       return
