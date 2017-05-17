@@ -1,6 +1,6 @@
 const execFile = require('child_process').execFile
 
-const interval = 2 * 3600 * 1000
+const interval = 60 * 60 * 1000
 
 function update(ctx) {
   execFile('yaourt', ['-Qua'], (err, stdout) => {
