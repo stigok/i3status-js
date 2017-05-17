@@ -7,7 +7,7 @@ const mapObject = require('./utils').mapObject
 
 const pluginDir = process.env.PLUGIN_DIR || path.join(cwd, 'commands.d/')
 const separator = ' | '
-const clearScreen = '\x1B[2J\x1B[0f'
+const clearScreen = process.env.NOCLEAR ? '\n' : '\x1B[2J\x1B[0f'
 
 const dict = {}
 const contexts = []
