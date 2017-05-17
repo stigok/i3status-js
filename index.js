@@ -7,7 +7,8 @@ const mapObject = require('./utils').mapObject
 
 const pluginDir = process.env.PLUGIN_DIR || path.join(cwd, 'commands.d/')
 const separator = ' | '
-const clearScreen = process.env.NOCLEAR ? '\n' : '\x1B[2J\x1B[0f'
+// Appending newline to avoid control chars showing in i3-bar
+const clearScreen = process.env.NOCLEAR ? '' : '\x1b[2J\x1b[H\n'
 const updateInterval = process.env.INTERVAL || 1000
 
 const dict = {}
@@ -27,10 +28,9 @@ fs.readdir(pluginDir, (err, files) => {
 
 let statusbar
 function write (updated) {
-  if (updated !== statusbar) {
+  if (statusbar !== updated) {
     statusbar = updated
-    process.stdout.write(clearScreen + '\n')
-    process.stdout.write(updated)
+    process.stdout.write(clearScreen + statusbar)
   }
 }
 
