@@ -6,7 +6,7 @@ Loads files from `commands.d/` in alphabetical order and prints their output in 
 
 ## Example command file
 
-```
+```javascript
 // Updates timestamp every second
 module.exports = (ctx) => {
   setInterval(() => {
