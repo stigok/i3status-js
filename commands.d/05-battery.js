@@ -7,7 +7,6 @@ function update(ctx) {
   execFile('acpi', ['--battery'], (err, stdout) => {
     const batteryLevel = utils.extract(/(\d{1,3}\%)/, stdout)
     const isCharging = !stdout.match(/discharging/i)
-    // TODO: Replace strings with icons
     ctx.value = `${batteryLevel} ${isCharging ? '[pwr]' : '[+/-]'}`
   })
 }

@@ -9,12 +9,5 @@ module.exports = (ctx) => {
     ctx.value = matches.join(': ')
     ctx.refresh()
   })
-
-  log.stderr.on('data', data => {
-    // TODO: bind to ctx.error()
-    console.error('data', data)
-  })
-
-  ctx.value = 'nmcli mon'
 }
 

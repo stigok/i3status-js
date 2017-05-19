@@ -2,6 +2,7 @@ const utils = require('../utils.js')
 const execFile = require('child_process').execFile
 const os = require('os')
 const path = require('path')
+
 const interval = 5 * 60 * 1000
 
 const todos = path.join(os.homedir(), 'docs', 'TODO')

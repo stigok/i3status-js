@@ -7,8 +7,7 @@ function update(ctx) {
   execFile('amixer', ['get', 'Master'], (err, stdout) => {
     const volume = utils.extract(/(\d{1,3}\%)/m, stdout.toString())
     const muted = stdout.toString().match(/\[off\]/)
-    // TODO: Replace strings with icons
-    ctx.value = `♬ ${muted ? '(V)' : volume}`
+    ctx.value = `♬ ${muted ? 'muted' : volume}`
   })
 }
 
