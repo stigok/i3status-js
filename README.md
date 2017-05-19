@@ -6,8 +6,7 @@ Loads files from `commands.d/` in alphabetical order and prints their output in 
 
 ## Usage
 
-Command files must export a function which will be called *once* when the program starts.
-This command function will be invoked with a single parameter `ctx`.
+The program `require`s all files in `PLUGIN_DIR` and invokes their exported function with a single argument `ctx`.
 
 ### Options
 
@@ -17,7 +16,7 @@ The program reads some environment variables
 - `PLUGIN_DIR` (Default: `./commands.d`) Directory path to read command files
 - `NOCLEAR` (Default: `undefined`) Don't clear terminal buffer on each iteration. Set to any truthy value.
 
-### ctx
+### The `ctx` object
 
 A unique context object is passed to each invoked function. The `value` property is read on each iteration of the main programs update interval. If necessary, the refresh function may be called to force a statusbar refresh immediately. This is useful when you require instant feedback for e.g. volume status or network events. See example files for how these are used.
 
@@ -28,7 +27,7 @@ A unique context object is passed to each invoked function. The `value` property
 }
 ```
 
-## Example command file
+## Example Command Files
 
 Since the command function is only invoked once, intervals and timeouts may be used to keep the values fresh.
 
@@ -60,10 +59,21 @@ module.exports = (ctx) => {
 
 See [commands.d/](https://github.com/stigok/statusbar-js/tree/develop/commands.d) for more working examples.
 
-# Contribute
+## Integrate with i3
+
+Simply edit the `bar` section of the i3 configuration file. On Arch Linux it's typically residing in `~/.config/i3/config`.
+Replace the path of the executable to wherever you've cloned this repo.
+
+```
+bar {
+  status_command exec ~/repos/statusbar-js/index.js 2>> ~/i3status.log
+}
+```
+
+## Contribute
 
 Please post questions, ideas or bugs as issues. 
 
-# License
+## License
 
 CC-0
