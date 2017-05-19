@@ -12,14 +12,18 @@ The program `require`s all files in `PLUGIN_DIR` and invokes their exported func
 
 The program reads some environment variables
 
-- `INTERVAL` (Default: 1000) Main program update interval in milliseconds
-- `PLUGIN_DIR` (Default: `./commands.d`) Directory path to read command files
+- `INTERVAL` (Default: `1000`) Main program update interval in milliseconds
+- `PLUGIN_DIR` (Default: `'./commands.d'`) Directory path to read command files
 - `NOCLEAR` (Default: `undefined`) Don't clear terminal buffer on each iteration. Set to any truthy value.
 
 ### The `ctx` object
 
-A unique context object is passed to each invoked function. The `value` property is read on each iteration of the main programs update interval. If necessary, the refresh function may be called to force a statusbar refresh immediately. This is useful when you require instant feedback for e.g. volume status or network events. See example files for how these are used.
+A unique context object is passed to each invoked function.
 
+- `value` (Default: `'…'`) String that will be written to the statusbar.
+- `refresh()` invoke to force a statusbar refresh. This is useful when you require instant feedback for e.g. volume meter or network events. See example files for how it can be used.
+
+Defaults:
 ```javascript
 {
   value: '…',
@@ -29,7 +33,7 @@ A unique context object is passed to each invoked function. The `value` property
 
 ## Example Command Files
 
-Since the command function is only invoked once, intervals and timeouts may be used to keep the values fresh.
+The command's function is only invoked once. Use intervals, timeouts, callbacks or events when the value is expected to change.
 
 ```javascript
 // Updates timestamp every second
@@ -54,6 +58,22 @@ function update (ctx) {
 module.exports = (ctx) => {
   update(ctx)
   setInterval(() => update(ctx), 10000)
+}
+```
+
+Update on specific events
+
+```javascript
+module.exports = (ctx) => {
+  const log = spawn('nmcli', ['device', 'monitor'], {encoding: 'utf8'})
+
+  log.stdout.on('data', data => {
+    const matches = extract(/^(\w+): ([^\n]+)$/, data.toString().replace(/\n+/g, ''))
+    ctx.value = matches.join(': ')
+    ctx.refresh()
+  })
+  
+  ctx.value = 'waiting for first update...'
 }
 ```
 
