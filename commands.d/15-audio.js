@@ -1,7 +1,7 @@
 const utils = require('../utils.js')
 const execFile = require('child_process').execFile
 
-const interval = 60 * 1000
+const interval = 20 * 1000
 
 function update(ctx) {
   execFile('amixer', ['get', 'Master'], (err, stdout) => {
