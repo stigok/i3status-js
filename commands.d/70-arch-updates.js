@@ -1,14 +1,22 @@
 const execFile = require('child_process').execFile
 
-const interval = 60 * 60 * 1000
+// Once every hour
+const interval = 3600 * 1000
 
 function update(ctx) {
-  execFile('yaourt', ['-Qua'], (err, stdout) => {
+  execFile('sudo', ['yaourt', '-Sy'], (err, stdout) => {
     if (err) {
-      ctx.value = 'no updates'
+      console.error('sudo yaourt -Sy failed', err)
+      ctx.value = 'no updates (erred)'
       return
     }
-    ctx.value = '' + stdout.toString().split(/\n/g).length + ' updates!'
+    execFile('yaourt', ['-Qua'], (err, stdout) => {
+      if (err) {
+        ctx.value = 'no updates'
+        return
+      }
+      ctx.value = '' + stdout.toString().split(/\n/g).filter(str => str.length).length + ' updates!'
+    })
   })
 }
 
